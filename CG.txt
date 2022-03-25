@@ -1,0 +1,365 @@
+#include<GL/glut.h>
+#include<GL/gl.h>
+#include<math.h>
+
+void init()
+{
+    glClearColor(1.0,0.0,0.0,1.0);  //to give color to background screen
+    glLoadIdentity(); //to reset matrix to identity matrix(reset coordination system)
+    gluOrtho2D(-500,500,-500,500);
+}
+
+void reflection_x(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT);//to clear out previous buffers
+    //draw
+    glBegin(GL_POLYGON);
+    int x[]={0,0,50},y[]={50,0,0},n=3;
+    glColor3f(1.0,1.0,1.0);
+    for(int i=0;i<n;i++){
+        glVertex3f(x[i], y[i], 0);
+    }
+    glEnd();
+    glBegin(GL_POLYGON);
+    glColor3f(0.0,0.0,0.0);
+    for(int i=0;i<n;i++){
+        x[i]=x[i];
+        y[i]=-y[i];
+        glVertex3f(x[i],y[i] , 0);
+    }
+
+    glEnd();
+    glFlush(); //to display
+}
+
+void reflection_y(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT);//to clear out previous buffers
+    //draw
+    glBegin(GL_POLYGON);
+    int x[]={0,0,50},y[]={50,0,0},n=3;
+    glColor3f(1.0,1.0,1.0);
+    for(int i=0;i<n;i++){
+        glVertex3f(x[i], y[i], 0);
+    }
+    glEnd();
+    glBegin(GL_POLYGON);
+    glColor3f(0.0,0.0,0.0);
+    for(int i=0;i<n;i++){
+        x[i]=-x[i];
+        y[i]=y[i];
+        glVertex3f(x[i],y[i] , 0);
+    }
+
+    glEnd();
+    glFlush(); //to display
+}
+
+void translation(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT);//to clear out previous buffers
+    //draw
+    glBegin(GL_POLYGON);
+    int x[]={0,0,50},y[]={50,0,0},n=3,tx=100,ty=100;
+    glColor3f(1.0,1.0,1.0);
+    for(int i=0;i<n;i++){
+        glVertex3f(x[i], y[i], 0);
+    }
+    glEnd();
+    glBegin(GL_POLYGON);
+    glColor3f(0.0,0.0,0.0);
+    for(int i=0;i<n;i++){
+        x[i]=x[i]+tx;
+        y[i]=y[i]+ty;
+        glVertex3f(x[i],y[i] , 0);
+    }
+
+    glEnd();
+    glFlush(); //to display
+}
+
+void rotation(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT);//to clear out previous buffers
+    //draw
+    glBegin(GL_POLYGON);
+    int x[]={0,0,50},y[]={50,0,0},n=3,theta=1.2;// theta in radians
+    glColor3f(1.0,1.0,1.0);
+    for(int i=0;i<n;i++){
+        glVertex3f(x[i], y[i], 0);
+    }
+    glEnd();
+    glBegin(GL_POLYGON);
+    glColor3f(0.0,0.0,0.0);
+    for(int i=0;i<n;i++){
+        x[i]=(x[i]*cos(theta))+(y[i]*sin(theta));
+        y[i]=((y[i]*cos(theta))+(x[i]*sin(theta)));
+        glVertex3f(x[i],y[i] , 0);
+    }
+
+    glEnd();
+    glFlush(); //to display
+}
+
+void shearing(void)
+{
+    glClear(GL_COLOR_BUFFER_BIT);//to clear out previous buffers
+    //draw
+    glBegin(GL_POLYGON);
+    int x[]={0,0,50},y[]={50,0,0},n=3,sx=3,sy=2;
+    glColor3f(1.0,1.0,1.0);
+    for(int i=0;i<n;i++){
+        glVertex3f(x[i], y[i], 0);
+    }
+    glEnd();
+    glBegin(GL_POLYGON);
+    glColor3f(0.0,0.0,0.0);
+    for(int i=0;i<n;i++){
+        x[i]=x[i]+sx*y[i];
+        y[i]=y[i]+sy*x[i];
+        glVertex3f(x[i],y[i] , 0);
+    }
+
+    glEnd();
+    glFlush(); //to display
+}
+
+int main(int argc,char **argv)
+{
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_RGB);
+    glutInitWindowPosition(100,50);
+    glutInitWindowSize(500,500);
+    glutCreateWindow("shearing");
+    glutDisplayFunc(shearing);
+    init();
+    glutMainLoop();
+}
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+CG Lab Eval Qns
+
+Anupam mam
+
+Qns - See pic
+
+Viva : 
+
+1) What does ortho2D do ?
+
+2) what does GlutMainLoop do? 
+
+3) what is the function of GL_Quads ?
+
+Difference between mid point circle and Bresenhman' circle
+Equation of ellipse
+Advantage and disadvantage
+Difference between flood fill and boundry fill
+
+Code : Rotation of triangle
+
+// https://cs.lmu.edu/~ray/notes/openglexamples/
+
+#include "./freeglut-3.2.1/include/GL/freeglut.h"
+#include<GL/glut.h>
+#include<iostream>
+#include<math.h>
+void init(){
+  glClearColor(1.0,1.0,1.0,0.0);
+  glMatrixMode(GL_PROJECTION);
+  gluOrtho2D(0.0,600.0,0.0,600.0);
+}
+
+void Display(){
+  int anglevalue = 60;
+  float cosvalue = cos((anglevalue*3.14)/180);
+  float sinvalue = sin((anglevalue*3.14)/180);
+  glClear(GL_COLOR_BUFFER_BIT);
+  glColor3f(0.0,1.0,0.0);
+  glBegin(GL_TRIANGLES);
+  glVertex2i(150,80);
+  glVertex2i(100,50);
+  glVertex2i(50,90);
+  glEnd();
+  float x1 = 150*cosvalue + 80*sinvalue;
+  float y1 = 80*cosvalue - 150*sinvalue; 
+  float x2 = 100*cosvalue + 50*sinvalue;
+  float y2 = 50*cosvalue - 100*sinvalue; 
+  float x3 = 50*cosvalue + 90*sinvalue;
+  float y3 = 90*cosvalue - 50*sinvalue; 
+  glBegin(GL_TRIANGLES);
+  glVertex2i(x1,y1);
+  glVertex2i(x2,y2);
+  glVertex2i(x3,y3);
+  glEnd();
+  glFlush();
+}
+
+int main(int argc,char** argv){
+  glutInit(&argc,argv);
+  glutInitDisplayMode(GLUT_SINGLE| GLUT_RGB);
+  glutInitWindowPosition(80,100);
+  glutInitWindowSize(600,600);
+  glutCreateWindow("solution");
+  init();
+  glutDisplayFunc(Display);
+  glutMainLoop();
+}
+
+Code : Circle Intersection 
+
+#include "./freeglut-3.2.1/include/GL/freeglut.h"
+#include<iostream>
+#include<math.h>
+using namespace std;
+GLdouble xcentre,ycentre,r,x2centre,y2centre,r2;
+void ftry()
+{
+  GLdouble dx,dy,steps,xinc,yinc,x,y,p[10000];
+  x=0;
+  y=r;
+  p[0]=3-2*r;
+  glClear(GL_COLOR_BUFFER_BIT);
+  glPointSize(2.0);
+  glBegin(GL_POINTS);
+  glColor3f(1.0,0,0);
+  for(int i=0;x<=y;i++)
+  {
+    if(p[i]<0)
+    {
+      p[i+1]=p[i]+4*x+6;
+      x++;
+    }
+    else
+    {
+      p[i+1]=p[i]+4*x-4*y+10;
+      x++;
+      y--;
+    }
+    glVertex2i(y+xcentre,x+ycentre);
+    glVertex2i(x+xcentre,y+ycentre);
+    glVertex2i(y+xcentre,-x+ycentre);
+    glVertex2i(x+xcentre,-y+ycentre);
+    glVertex2i(-x+xcentre,-y+ycentre);
+    glVertex2i(-y+xcentre,-x+ycentre);
+    glVertex2i(-y+xcentre,x+ycentre);
+    glVertex2i(-x+xcentre,y+ycentre);
+  }
+  glEnd();
+
+
+  x=0;
+  y=r2;
+  p[0]=3-2*r2;
+  glPointSize(2.0);
+  glBegin(GL_POINTS);
+  glColor3f(0,1.0,0);
+  for(int i=0;x<=y;i++)
+  {
+    if(p[i]<0)
+    {
+      p[i+1]=p[i]+4*x+6;
+      x++;
+    }
+    else
+    {
+      p[i+1]=p[i]+4*x-4*y+10;
+      x++;
+      y--;
+    }
+    glVertex2i(y+x2centre,x+y2centre);
+    glVertex2i(x+x2centre,y+y2centre);
+    glVertex2i(y+x2centre,-x+y2centre);
+    glVertex2i(x+x2centre,-y+y2centre);
+    glVertex2i(-x+x2centre,-y+y2centre);
+    glVertex2i(-y+x2centre,-x+y2centre);
+    glVertex2i(-y+x2centre,x+y2centre);
+    glVertex2i(-x+x2centre,y+y2centre);
+  }
+  glEnd();
+  
+  glFlush();
+}
+
+void init()
+{
+  glClearColor(1.0,1.0,1.0,0.0);
+  glColor3f(1.0,0.6,0.0);
+  glViewport(0,0,640,480);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluOrtho2D(0,640,0,480);
+}
+
+int main(int argc, char **argv)
+{
+  cout<<"Enter the origin xcentre and ycentre";
+  cin>>xcentre>>ycentre;
+  cout<<"Enter the radius of circle r";
+  cin>>r;
+  cout<<"Enter the origin x2centre and y2centre";
+  cin>>x2centre>>y2centre;
+  cout<<"Enter the radius of circle r2";
+  cin>>r2;
+  glutInit(&argc,argv);
+  glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+  glutInitWindowSize(640,480);
+  glutInitWindowPosition(0,0);
+  glutCreateWindow("try");
+  init();
+  glutDisplayFunc(ftry);
+  glutMainLoop();
+  return 0;
+}
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------
+
+
+glClearColor(0.1,0.3,0.7,0.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    int r = 100;
+    int x = 0, y = r;
+    int d = 1-r;
+    glColor3f(1.0,1.0,1.0);
+   
+    
+    glBegin(GL_POLYGON);
+    glVertex2i(250,350);
+    glVertex2i(150,250);
+    glVertex2i(350,250);
+    glEnd();
+    glColor3f(0.5,0.2,0.5);
+    glBegin(GL_POINTS);
+    while(x <= y){
+        glVertex2i(250+x, 250+y);
+        glVertex2i(250+y, 250+x);
+        glVertex2i(250+y, 250-x);
+        glVertex2i(250+x, 250-y);
+        glVertex2i(250-x, 250-y);
+        glVertex2i(250-y, 250-x);
+        glVertex2i(250-y, 250+x);
+        glVertex2i(250-x, 250+y);
+        x = x+1;
+        if(d < 0){
+            d = d + 2*x + 3;
+        }else{
+            y = y-1;
+            d = d + 2*x - 2*y + 5;
+        }
+    }
+    glEnd();
+
+    glFlush();
